@@ -27,15 +27,19 @@ def register(request):
             'access': str(refresh.access_token),
         }
 
-        # Puedes personalizar el retorno del token según tus necesidades
-        return Response ( {
+        # Personalizar el retorno del token según las necesidades
+        return Response({
             'message': 'Usuario registrado exitosamente.',
             'user': serializer.data,
             'token': token,
-        })
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        }, status=status.HTTP_201_CREATED)
     
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # Agrega mensajes de error más detallados
+    print(f"Error en el registro: {serializer.errors}")
+    return Response({
+        'message': 'Error en el registro',
+        'errors': serializer.errors
+    }, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -86,6 +90,13 @@ def upload_image(request):
     # Retorna un error si la solicitud no es de tipo POST
     return Response({"error": "Se esperaba una solicitud POST"}, status=status.HTTP_405_METHOD_NOT_ALLOWED) """
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import ColorblindImageSerializer
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def upload_image(request):
@@ -108,8 +119,28 @@ def upload_image(request):
             except Exception as e:
                 return Response({"error": f"Error al recolorizar la imagen: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # Devolver la URL de la imagen procesada
+            return Response({
+                'id': image_instance.id,
+                'user': image_instance.user.id,
+                'image': request.build_absolute_uri(image_instance.image.url),
+                'type': image_instance.type,
+                'subtype': image_instance.subtype,
+                'uploaded_at': image_instance.uploaded_at,
+            }, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({"error": "Se esperaba una solicitud POST"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    try:
+        refresh_token = request.data["refresh"]
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+
+        return Response(status=status.HTTP_205_RESET_CONTENT)
+    except Exception as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': str(e)})

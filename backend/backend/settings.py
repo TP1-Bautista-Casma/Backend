@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'api.apps.ApiConfig',  # 'api',
     'rest_framework.authtoken',
     'corsheaders',
@@ -98,9 +99,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
-        'PORT':'3307',
+        'PORT':'3306',
         'USER':'root',
-        'PASSWORD':'',
+        'PASSWORD':'ihateall',
         'NAME':'inclusive_hue',
         'OPTIONS':{
             'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"
