@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'InclusiveHue'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_291325E7242A446BB43C23F3F0968469 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_935C1287A8D343C5AEC625AB7CC89429 }}
