@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'api.apps.ApiConfig',  # 'api',
+    #'api.apps.ApiConfig',  # 'api',
     'rest_framework.authtoken',
     'corsheaders',
     'api',
