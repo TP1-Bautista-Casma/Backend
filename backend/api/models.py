@@ -29,24 +29,6 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
     
-
-""" class ColorblindImage(models.Model):
-    USER_CHOICES = [
-        ('protanomalous', 'Protanomalous'),
-        ('deuteranomalous', 'Deuteranomalous'),
-        ('tritanomalous', 'Tritanomalous'),
-        # Puedes agregar más subtipos si es necesario
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='colorblind_images/')
-    type = models.CharField(max_length=50, choices=USER_CHOICES)
-    subtype = models.CharField(max_length=50, blank=True, null=True)
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.type} - {self.uploaded_at}" """
-
 class ColorblindImage(models.Model):
     TYPE_CHOICES = [
         ('anomalous_trichromatic', 'Tricromático Anómalo'),

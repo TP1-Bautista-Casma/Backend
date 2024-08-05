@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
-from .serializers import UserSerializer, ColorblindImageSerializer
+from .serializers import UserSerializer, ColorblindImageSerializer, UserEditSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .models import User, ColorblindImage
@@ -144,3 +144,22 @@ def logout(request):
         return Response(status=status.HTTP_205_RESET_CONTENT)
     except Exception as e:
         return Response(status=status.HTTP_400_BAD_REQUEST, data={'error': str(e)})
+    
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def edit_profile(request):
+    user = request.user
+    serializer = UserEditSerializer(user, data=request.data, partial=True)
+    
+    if serializer.is_valid():
+        serializer.save()
+        return Response({
+            'message': 'Perfil actualizado exitosamente.',
+            'user': serializer.data
+        }, status=status.HTTP_200_OK)
+    
+    return Response({
+        'message': 'Error al actualizar el perfil',
+        'errors': serializer.errors
+    }, status=status.HTTP_400_BAD_REQUEST)

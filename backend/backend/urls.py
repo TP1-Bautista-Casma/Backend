@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 from api import views
 from django.urls import path,re_path
-from api.views import register,login,upload_image
+from api.views import register,login,upload_image, edit_profile
 #from api.views import UserCreateAPIView, UserLoginAPIView
 
 
@@ -31,5 +31,6 @@ urlpatterns = [
     re_path('login',views.login),
     re_path('register',views.register),
      path('upload/', upload_image, name='upload_image'),
-    path('logout', views.logout, name='logout'), 
+    path('logout', views.logout, name='logout'),
+    path('edit_profile/', edit_profile, name='edit_profile'), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

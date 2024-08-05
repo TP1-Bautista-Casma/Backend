@@ -25,3 +25,21 @@ class ColorblindImageSerializer(serializers.ModelSerializer):
         model = ColorblindImage
         fields = ['id', 'user', 'image', 'type', 'subtype', 'uploaded_at']
         read_only_fields = ['user', 'uploaded_at']
+        
+
+class UserEditSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=False)
+
+    class Meta:
+        model = User
+        fields = ['email', 'password']
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        instance = super().update(instance, validated_data)
+        
+        if password:
+            instance.set_password(password)
+            instance.save()
+        
+        return instance

@@ -20,16 +20,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-)h5ttpk80%kt%ba!l2@d0^9=(f81t!d$+_z7rhcrer0089vr*g'
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key')
+SECRET_KEY = 'django-insecure-)h5ttpk80%kt%ba!l2@d0^9=(f81t!d$+_z7rhcrer0089vr*g'
+#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['inclusivehue.azurewebsites.net','https://inclusivehue.azurewebsites.net']
+#ALLOWED_HOSTS = ['inclusivehue.azurewebsites.net','https://inclusivehue.azurewebsites.net']
 #ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
-
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -97,30 +97,30 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-""" DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
-        'PORT':'3307',
+        'PORT':'3306',
         'USER':'root',
-        'PASSWORD':'',
+        'PASSWORD':'mysql',
         'NAME':'inclusive_hue',
         'OPTIONS':{
             'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
-} """
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'dalton.postgres.database.azure.com',
-        'PORT': '5432',
-        'USER': 'adminjoyce',
-        'PASSWORD': 'TPDaltonismo!',
-        'NAME':'inclusive_hue',
-    }
 }
+
+"""DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'USER': 'root',
+        'PASSWORD': 'postgres',
+        'NAME': 'inclusive_hue',
+    }
+}"""
 
 
 # Password validation
