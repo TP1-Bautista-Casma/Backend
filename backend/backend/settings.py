@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,16 +21,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)h5ttpk80%kt%ba!l2@d0^9=(f81t!d$+_z7rhcrer0089vr*g'
-#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'default-secret-key')
+#SECRET_KEY = 'django-insecure-)h5ttpk80%kt%ba!l2@d0^9=(f81t!d$+_z7rhcrer0089vr*g'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 #DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
-
+DEBUG =os.environ.get("DEBUG", "False").lower() == "True"
 #ALLOWED_HOSTS = ['inclusivehue.azurewebsites.net','https://inclusivehue.azurewebsites.net']
-#ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+#ALLOWED_HOSTS = ['*']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,8 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
     'api.apps.ApiConfig',  # 'api',
     'rest_framework.authtoken',
     'corsheaders',
@@ -110,7 +110,10 @@ DATABASES = {
         }
     }
 }
+database_url=os.environ.get("DATABASE_URL")
+DATABASES["default"]= dj_database_url.parse(database_url)
 
+# postgresql://inclusivehuebd_user:52HkCiGuCOHFn7FnoNjX3P2NTyGnnQfS@dpg-cr5p7tbtq21c73b5ouu0-a.oregon-postgres.render.com/inclusivehuebd
 """DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgres',
@@ -166,12 +169,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
-AUTHENTICATION_BACKENDS = (
+"""AUTHENTICATION_BACKENDS = (
     'api.backends.EmailBackend',  # Reemplaza 'tu_app' con el nombre de tu aplicación
     'django.contrib.auth.backends.ModelBackend',
-)
+)"""
 
-AUTH_USER_MODEL = 'api.User'
+#AUTH_USER_MODEL = 'api.User'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'

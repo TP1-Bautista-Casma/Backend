@@ -19,18 +19,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from api import views
-from django.urls import path,re_path
-from api.views import register,login,upload_image, edit_profile
+from django.urls import path
+from api.views import upload_image
 #from api.views import UserCreateAPIView, UserLoginAPIView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls), 
-    #path('api/register/', register.as_view(), name='register'),
-    #path('api/login/', login.as_view(), name='login')
-    re_path('login',views.login),
-    re_path('register',views.register),
-     path('upload/', upload_image, name='upload_image'),
-    path('logout', views.logout, name='logout'),
-    path('edit_profile/', edit_profile, name='edit_profile'), 
+    path('upload/', upload_image, name='upload_image'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

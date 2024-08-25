@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import User
-# Register your models here.
+from .models import ColorblindImage
 
-admin.site.register(User)
-
+# Registra el modelo ColorblindImage en el admin
+admin.site.register(ColorblindImage)
