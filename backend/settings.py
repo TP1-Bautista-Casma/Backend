@@ -98,16 +98,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'PORT':'3306',
-        'USER':'root',
-        'PASSWORD':'mysql',
-        'NAME':'inclusive_hue',
-        'OPTIONS':{
-            'init_command':"SET sql_mode='STRICT_TRANS_TABLES'"
-        }
+     'default': {
+        "ENGINE":"django,db,backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+
     }
 }
 database_url=os.environ.get("DATABASE_URL")
@@ -160,7 +154,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -169,12 +163,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # settings.py
 
-"""AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = (
     'api.backends.EmailBackend',  # Reemplaza 'tu_app' con el nombre de tu aplicación
     'django.contrib.auth.backends.ModelBackend',
-)"""
+)
 
-#AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'api.User'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
