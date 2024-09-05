@@ -19,6 +19,7 @@ def upload_image(request):
             try:
                 if type_ == 'anomalous_trichromatic':
                     adapt_colors_for_anomalous_trichromat(image_instance.image.path, subtype)
+                    return Response({"error": "Tipo de daltonismo y algoritmo aplicado"});
                 elif type_ == 'dichromatic':
                     adapt_colors_for_dichromatic(image_instance.image.path, subtype)
                 elif type_ == 'achromatic':
