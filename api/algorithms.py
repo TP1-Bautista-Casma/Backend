@@ -4,9 +4,16 @@ import cv2
 from scipy.optimize import minimize
 from sklearn.cluster import MiniBatchKMeans
 from PIL import Image
+import logging
 
+# Configurar el sistema de logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def get_transformation_matrix(cone_type):
+
+    logging.info(f"Obteniendo matriz de transformación para el tipo de cono anómalo: {cone_type}")
+
+
     # Matrices de transformación específicas para cada tipo de cono anómalo
     if cone_type == 'protanomalous':
         T_anom = np.array([[0.817, 0.183, 0.0],
@@ -21,15 +28,22 @@ def get_transformation_matrix(cone_type):
                            [0.0, 0.733, 0.267],
                            [0.0, 0.183, 0.817]])  # Matriz de transformación para tritanomalía
     else:
+        logging.error(f"Tipo de cono anómalo no reconocido: {cone_type}")
         raise ValueError("Tipo de cono anómalo no reconocido")
 
     return T_anom
 
 def adapt_colors_for_anomalous_trichromat(image_path, cone_type):
+
+    logging.info(f"Cargando imagen desde: {image_path}")
+
     # Cargar la imagen original
     original_image = Image.open(image_path).convert('RGB')
+    
     width, height = original_image.size
 
+    logging.info(f"Tamaño de la imagen: {width}x{height}")
+    
     # Obtener los píxeles de la imagen original
     pixels = original_image.load()
 
@@ -40,6 +54,8 @@ def adapt_colors_for_anomalous_trichromat(image_path, cone_type):
     # Obtener la matriz de corrección de color
     color_matrix = get_transformation_matrix(cone_type)
 
+    logging.info(f"Comenzando la adaptación de colores para la imagen...")
+    
     # Iterar sobre cada píxel de la imagen y adaptar sus colores
     for y in range(height):
         for x in range(width):
