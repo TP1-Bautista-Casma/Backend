@@ -172,3 +172,6 @@ AUTHENTICATION_BACKENDS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # Tamaño máximo de archivo en bytes (5 MB, puedes ajustar esto)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # También para cargas de archivos
